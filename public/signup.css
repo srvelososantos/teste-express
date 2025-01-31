@@ -1,0 +1,55 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #B4FFE7;
+    flex-direction: column;
+}
+
+label{
+    font-family: "Inter", serif;
+    margin: 0px;
+    
+}
+
+img{
+    width: 69px;
+    padding: 28px;
+}
+
+.main-container{
+    background-color: #D9D9D9;
+    width: 326px;
+    height: 536px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    border-radius: 5px;
+    border: solid black 1px;
+    padding: 16px;
+
+}
+
+#cadastre{
+    border-bottom: .5px solid black;
+    height: 45px;
+    font-family: "Inter", serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.txt{
+    height: 30px;
+    border-radius: 3px;
+    
+}
+
+button{
+    height: 38px;
+    background-color: #009DC0;
+    color: white;
+    border-radius: 5px;
+    margin-top: 50px;
+}

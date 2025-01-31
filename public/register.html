@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="signup.css">
+    
+    <title>Document</title>
+</head>
+<body>
+
+    <img src="img/2446925.png" alt="">
+
+    <form action="" id="userForm">
+        <div class="main-container">
+            <div id="cadastre">Cadastre-se</div>
+    
+            <label for="name">Nome completo</label>
+            <input class="txt" id="name" type="text">
+    
+            <label for="email">E-mail</label>
+            <input class="txt" id="email" type="text">
+    
+            <label for="confirm-email">Confirmar E-mail</label>
+            <input class="txt" id="confirmEmail" type="text">
+    
+            <label for="password">Senha</label>
+            <input class="txt" id="password" type="text">
+    
+            <label for="confirm-password">Confirmar senha</label>
+            <input class="txt" id="confirmPassword" type="text">
+    
+            <button class="btn-cadastrar" type="submit" onclick="window.location.href='/login'">Cadastrar</button>
+        </div>
+    </form>
+
+    <script>
+        const userForm = document.getElementById('userForm');
+
+        userForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const confirmEmail = document.getElementById('confirmEmail').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            const user = { name, email, confirmEmail, password, confirmPassword };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user),
+                });
+                const data = await response.json();
+                console.log('Usuário criado:', data);
+
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        });
+    </script>
+</body>
+</html>

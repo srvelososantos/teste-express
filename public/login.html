@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./signin.css">
+
+    <title>Document</title>
+</head>
+<body>
+    
+    <img src="img/2446925.png" alt="">
+
+    <form action="" id="userForm">
+        <div class="main-container">
+            <div id="login">Login</div>
+    
+            <label for="email">E-mail</label>
+            <input class="txt" id="email" type="text">
+
+            <label for="password">Senha</label>
+            <input class="txt" id="password" type="text">
+
+            <button class="btn-logar" type="submit">Logar</button>
+
+            <p>Ainda não tem conta? <a href="#">Cadastre-se</a></p>
+        </div>
+    </form>
+
+</body>
+
+<script>
+    const userForm = document.getElementById('userForm')
+
+    userForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value
+        const pw = document.getElementById('password').value
+
+        const user = { email, pw }
+        console.log(email)
+        console.log(pw)
+        console.log(user)
+
+        try {
+            const response = await fetch('http://localhost:3000/api/login',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+            const data = await response.json();
+            console.log(data) 
+        }catch (error) {
+            console.error('Erro:', error);
+        }
+    });
+</script>
+</html>

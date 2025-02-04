@@ -1,0 +1,35 @@
+body{
+    height: 100vh;
+    width: 100vh;
+    background-color: antiquewhite;
+    display: flex;
+}
+
+i{
+    font-size: 1.5em;
+}
+
+.dpdown{
+    align-self: flex-end;
+}
+
+.wide{
+    width: 15.5rem;
+}
+
+.short{
+    width: 4.5rem;
+}
+
+/*main container*/
+
+.main-container{
+    width: 100vh;
+}
+
+.subheader{
+    max-height: 40px;
+    background-color: green;
+    display: flex;
+    justify-content: space-around;
+}

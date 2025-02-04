@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+
+/*menu lateral*/
+
+ul{
+    padding-top: 1.2rem;
+    height: 33rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+p{
+    font-size: 1.5rem;
+    padding-left: 30px;
+}
+
+.item-menu{
+    display: flex;
+    align-items: center;
+    padding: 9px;
+}
+
+.item-menu:hover{
+    background-color: rgb(168, 168, 168);
+    cursor: pointer;
+}
+
+ul li.ativo{
+    background-color: rgb(168, 168, 168);
+}
+
+#item-user{
+    justify-items: flex-end;
+}
+
+nav.sidemenu{
+    background-color: #D9D9D9;
+    width: 5%;
+    height: 100vh;
+    padding: 30px 0 40px 1%;
+    overflow: hidden;
+    position: fixed;
+}
+
+nav.sidemenu.expand{
+    width: 15rem;
+    transition: .5s;
+}
+
+.sidemenu i{
+    font-size: 2.3rem;
+}
+
+.btn-expand{
+    padding-left: 9px;
+    cursor: pointer;
+}
+
+
+/*conteudo da pagina*/
+
+.main-container{
+    left: 5%;
+    overflow: visible;
+    position: static;
+    padding-left: 5vw;
+}
+
+.subheader{
+    height: 40px;
+    background-color: green;
+    display: flex;
+    justify-content: space-around;
+    width: 95vw;
+}
+
+.filter{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+    padding-right: 20px;
+    gap: 70px;
+}
+
+.filt{
+    display: flex;
+    align-items: center;
+}
+
+.filt > i{
+    font-size: 25px;
+}
+
+.filt > p{
+    padding-left: 10px;
+}

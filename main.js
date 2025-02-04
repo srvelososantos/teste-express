@@ -37,6 +37,10 @@ app.get('/register', (req, res) =>{
     res.sendFile(path.join(__dirname, 'public', '/register.html'))
 });
 
+app.get('/home', (req, res) =>{
+    res.sendFile(path.join(__dirname, 'public', '/home.html'))
+});
+
 app.listen(port, () =>{
     console.log('server is running in localhost:3000')
 });

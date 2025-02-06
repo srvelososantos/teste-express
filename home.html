@@ -20,6 +20,7 @@
     <nav class="sidemenu">
         <div class="btn-expand">
             <i class="bi bi-list" id="btn-expand-i"></i>
+            <p>Stutt </p>
         </div>
 
         <ul class="">
@@ -53,14 +54,18 @@
         </ul>
     </nav>
 
-
+    <!--conteudo da pagina-->
     <div class="main-container">
+
+        <!--books, search, buttons-->
         <div class="subheader">
-            <p>Books</p>
+            <p>Books (1)</p>
             <input type="text" placeholder="search">
-            <button>+  add book</button>
-            <button id="upgbutton">Upgrade</button>
+            <button type="button" id="btnAdd" onclick="addLine()">+  add book</button>
+            <button type="button" id="upgbutton">👑 Upgrade</button>
         </div>
+
+        <!--filter, sort, view-->
         <div class="filter">
             <div class="filt">
                 <i class="bi bi-sliders"></i>
@@ -75,9 +80,31 @@
                 <p>View</p>
             </div>
         </div>
+
+        <!--table-->
         <div class="table">
-            
+            <table class="files" id="bookTable">
+                <thead>
+                    <tr>
+                        <th>TITLE</th>
+                        <th>STATUS</th>
+                        <th>AUTHOR</th>
+                        <th>PROGRESS</th>
+                        <th>VOICE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>otello</td>
+                        <td>ready</td>
+                        <td>shakespeare</td>
+                        <th>25% readed</th>
+                        <td>feminine</td>
+                    </tr>
+                </tbody>
+            </table>    
         </div>
+
     </div>
 
 

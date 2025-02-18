@@ -29,42 +29,73 @@
     
             <label for="password">Senha</label>
             <input class="txt" id="password" type="text">
-    
+            
+
             <label for="confirm-password">Confirmar senha</label>
             <input class="txt" id="confirmPassword" type="text">
     
-            <button class="btn-cadastrar" type="submit" onclick="window.location.href='/login'">Cadastrar</button>
+            <button class="btn-cadastrar" type="submit">Cadastrar</button>
+
+            <div id="message"></div>
+            <div id="errors"></div>
         </div>
     </form>
 
     <script>
+        import validator from 'validator';
+
         const userForm = document.getElementById('userForm');
 
         userForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            //captura os valores dos inputs
             const name = document.getElementById('name').value;
+            
             const email = document.getElementById('email').value;
+            
             const confirmEmail = document.getElementById('confirmEmail').value;
+
             const password = document.getElementById('password').value;
+
             const confirmPassword = document.getElementById('confirmPassword').value;
+
 
             const user = { name, email, confirmEmail, password, confirmPassword };
 
-            try {
+            //envia os dados para o backend
+            try{
                 const response = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(user),
+                    body: JSON.stringify({ name, email, confirmEmail, password, confirmPassword }),
                 });
-                const data = await response.json();
-                console.log('Usuário criado:', data);
 
-            } catch (error) {
-                console.error('Erro:', error);
+                const resultado = await response.json();
+
+                // Reseta mensagens anteriores
+                const mensagemDiv = document.getElementById("message");
+                const errosDiv = document.getElementById("errors");
+                mensagemDiv.innerHTML = "";
+                errosDiv.innerHTML = "";
+
+                if (response.ok) {
+                    mensagemDiv.innerHTML = `<p style="color: green">${resultado.mensagem}</p>`;
+                } else {
+                    let listaErros = "<ul style='color: red'>";
+                    resultado.erros.forEach(erro => {
+                        listaErros += `<li>${erro.msg}</li>`;
+                    });
+                    listaErros += "</ul>";
+                    errosDiv.innerHTML = listaErros;
+                }
+            }catch(erro){
+                console.error("Erro na requisição:", erro);
+                errosDiv.innerHTML = `<p style="color: red">Erro ao conectar ao servidor. Tente novamente.</p>`;
             }
+            
         });
     </script>
 </body>

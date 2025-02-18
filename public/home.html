@@ -61,7 +61,7 @@
         <div class="subheader">
             <p>Books (1)</p>
             <input type="text" placeholder="search">
-            <button type="button" id="btnAdd" onclick="addLine()">+  add book</button>
+            <button type="button" id="btnAdd" onclick="newArchive()">+  add book</button>
             <button type="button" id="upgbutton">👑 Upgrade</button>
         </div>
 
@@ -103,6 +103,18 @@
                     </tr>
                 </tbody>
             </table>    
+        </div>
+
+            <!-- Janela modal -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal">
+                <span class="close-btn" onclick="closeModal()">✖</span>
+                <p>Escolha uma opção:</p>
+                <div class="modal-buttons">
+                    <button class="btn-primary">Opção 1</button>
+                    <button class="btn-secondary">Opção 2</button>
+                </div>
+            </div>
         </div>
 
     </div>

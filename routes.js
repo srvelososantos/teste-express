@@ -3,11 +3,13 @@ const User = require('./models/user');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const { body, validationResult } = require('express-validator');
+
 
 dotenv.config();
 
 // Criar um usuário (Create)
-router.post('/users', async (req, res) => {
+/*.post('/users', async (req, res) => {
     const { name, email, password } = req.body;
     try {
         const existingUser = await User.findOne({ email });
@@ -17,12 +19,26 @@ router.post('/users', async (req, res) => {
 
         const newUser = new User({ name, email, password });
         await newUser.save();
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        //const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(201).json({ token });
+        res.status(201).json({ newUser });
     } catch (err) {
         res.status(400).json({ error: 'Erro ao criar o usuário', message: err.message });
     }
+});*/
+
+router.post('/users', [
+  body('name').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
+  body('email').isEmail().withMessage('E-mail inválido'),
+  body('password').isLength({ min: 6 }).withMessage('A senha deve ter pelo menos 6 caracteres')
+], (req, res) => {
+    const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ erros: errors.array() });
+  }
+
+  res.json({ mensagem: 'Cadastro realizado com sucesso!' });
 });
 
 // login
@@ -82,5 +98,8 @@ router.delete('/users/:id', async (req, res) => {
         res.status(400).json({ error: 'Erro ao deletar o usuário', message: err.message });
     }
 });
+
+//add book
+router.post('/')
 
 module.exports = router;

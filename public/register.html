@@ -36,13 +36,14 @@
     
             <button class="btn-cadastrar" type="submit">Cadastrar</button>
 
-            <div id="message"></div>
-            <div id="errors"></div>
+            
         </div>
     </form>
 
+    <div id="mensagem"></div>
+    <div id="erros"></div>
+
     <script>
-        import validator from 'validator';
 
         const userForm = document.getElementById('userForm');
 
@@ -51,15 +52,10 @@
             
             //captura os valores dos inputs
             const name = document.getElementById('name').value;
-            
             const email = document.getElementById('email').value;
-            
             const confirmEmail = document.getElementById('confirmEmail').value;
-
             const password = document.getElementById('password').value;
-
             const confirmPassword = document.getElementById('confirmPassword').value;
-
 
             const user = { name, email, confirmEmail, password, confirmPassword };
 
@@ -72,12 +68,12 @@
                     },
                     body: JSON.stringify({ name, email, confirmEmail, password, confirmPassword }),
                 });
-
+                
                 const resultado = await response.json();
 
                 // Reseta mensagens anteriores
-                const mensagemDiv = document.getElementById("message");
-                const errosDiv = document.getElementById("errors");
+                const mensagemDiv = document.getElementById("mensagem");
+                const errosDiv = document.getElementById("erros");
                 mensagemDiv.innerHTML = "";
                 errosDiv.innerHTML = "";
 

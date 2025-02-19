@@ -99,6 +99,17 @@ router.delete('/users/:id', async (req, res) => {
     }
 });
 
+// Deletar um usuário (Delete)
+router.delete('/users', async (req, res) => {
+    //const { id } = req.params;
+    try {
+        await User.findByIdAndDelete(id);
+        res.status(204).send();
+    } catch (err) {
+        res.status(400).json({ error: 'Erro ao deletar o usuário', message: err.message });
+    }
+});
+
 //add book
 router.post('/')
 

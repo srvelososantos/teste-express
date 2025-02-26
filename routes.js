@@ -4,6 +4,9 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { body, validationResult } = require('express-validator');
+const session = require('express-session');
+const path = require('path');
+
 
 
 dotenv.config();
@@ -28,17 +31,29 @@ dotenv.config();
 });*/
 
 router.post('/users', [
-  body('name').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
+  body('nome').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
   body('email').isEmail().withMessage('E-mail inválido'),
   body('password').isLength({ min: 6 }).withMessage('A senha deve ter pelo menos 6 caracteres')
-], (req, res) => {
+], async (req, res) => {
     const errors = validationResult(req);
 
+    const {nome, email, password} = req.body;
   if (!errors.isEmpty()) {
     return res.status(400).json({ erros: errors.array() });
   }
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+      return res.status(400).json({ message: 'Email já registrado' });
+  }
+  //const senhaHash = await bcrypt.hash(password, 10);
+  const newUser = new User({ nome, email, password  });
 
-  res.json({ mensagem: 'Cadastro realizado com sucesso!' });
+  console.log(newUser)
+  await newUser.save();
+  res.status(201).json({ user: newUser,
+    mensagem: 'Cadastro realizado com sucesso!'
+   });
+  //res.json({ mensagem: 'Cadastro realizado com sucesso!' });  
 });
 
 // login
@@ -49,7 +64,7 @@ router.post('/login', async (req, res) => {
   
     try {
       const user = await User.findOne({ email });
-      console.log(user)
+      console.log(user._id)
       if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado' });
       }
@@ -58,13 +73,26 @@ router.post('/login', async (req, res) => {
       if (!isMatch) {
         return res.status(400).json({ message: 'Senha incorreta' });
       }
-  
+
+      
+      req.session.user = { id: user._id.toString(), nome: user.nome };
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      res.json({ token });
+      
+      console.log('logado')
+
+        if (!req.session) {
+            return res.status(500).json({ message: 'Erro na sessão. Tente novamente.' }); 
+        }
+        res.redirect('/home');
+      
     } catch (err) {
       res.status(500).json({ message: 'Erro ao fazer login', error: err.message });
     }
-  });
+});
+
+router.get('/session-test', (req, res) => {
+    res.json({ session: req.session });
+});
 
 // Obter todos os usuários (Read)
 router.get('/users', async (req, res) => {
@@ -108,6 +136,13 @@ router.delete('/users', async (req, res) => {
     } catch (err) {
         res.status(400).json({ error: 'Erro ao deletar o usuário', message: err.message });
     }
+});
+
+// Rota de logout
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        return res.redirect('/login'); // Redireciona para o login após o logout
+    });
 });
 
 //add book

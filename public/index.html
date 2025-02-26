@@ -1,13 +1,35 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="landingStyle.css">
 </head>
 <body>
-  <h1>Bem-vindo!</h1>
-  <button onclick="window.location.href='/register'">Cadastrar</button>
-  <button onclick="window.location.href='/login'">Logar</button>
+    <div class="main-container">
+        <div class="top-left">
+            <div class="logomarca">
+                <img id="logo" src="img/stutt.png" alt="">
+                <h1>Stutt</h1>
+            </div>
+            <h2>Crie, edite e gerencie seus e-Books</h2>
+            <h4>Chegou o novo aplicativo para geração e reprodução de áudio, com ele
+                você pode criar audiobooks a partir de e-books utilizando IA generativa,
+                reproduzir conteúdos originais
+            </h4>
+            <div class="btns">
+                
+                <button type="button" onclick="window.location.href='/register'" class="btn-comece">Cadastrar</button>
+                <button type="button" onclick="window.location.href='/login'" class="btn-ja">Logar</button>
+            </div>
+        </div>
+
+        <div class="top-right">
+            <img id="muie" src="img/jp.png" alt="">
+        </div>
+    </div>
 </body>
 </html>

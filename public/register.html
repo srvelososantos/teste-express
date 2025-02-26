@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta nome="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -18,8 +18,8 @@
         <div class="main-container">
             <div id="cadastre">Cadastre-se</div>
     
-            <label for="name">Nome completo</label>
-            <input class="txt" id="name" type="text">
+            <label for="nome">Nome completo</label>
+            <input class="txt" id="nome" type="text">
     
             <label for="email">E-mail</label>
             <input class="txt" id="email" type="text">
@@ -51,14 +51,14 @@
             e.preventDefault();
             
             //captura os valores dos inputs
-            const name = document.getElementById('name').value;
+            const nome = document.getElementById('nome').value;
             const email = document.getElementById('email').value;
             const confirmEmail = document.getElementById('confirmEmail').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            const user = { name, email, confirmEmail, password, confirmPassword };
-
+            const user = { nome, email, confirmEmail, password, confirmPassword };
+            
             //envia os dados para o backend
             try{
                 const response = await fetch('http://localhost:3000/api/users', {
@@ -66,7 +66,8 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ name, email, confirmEmail, password, confirmPassword }),
+                    
+                    body: JSON.stringify({ nome, email, confirmEmail, password, confirmPassword }),
                 });
                 
                 const resultado = await response.json();

@@ -51,7 +51,7 @@ router.post('/users', [
   }
   //const senhaHash = await bcrypt.hash(password, 10);
   const newUser = new User({ nome, email, password });
-
+  /*done */
   console.log(newUser)
   await newUser.save();
   res.status(201).json({ user: newUser,

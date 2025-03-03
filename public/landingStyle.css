@@ -1,0 +1,61 @@
+.main-container{
+    display: flex;
+}
+
+.btns{
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+
+.top-left, .top-right{
+    
+    width: 50%;
+    border: solid black 1px;
+    overflow: hidden;
+}
+
+.top-right{
+    height: 100%;
+}
+
+.top-left{
+    border: solid black 1px;
+    width: 50%;
+    overflow: hidden;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    background-color: #B4FFE7;
+}
+
+.logomarca{
+    display: flex;
+}
+
+#logo{
+    width: 69px;
+    height: 69px;
+}
+
+#muie{
+    width: 100%;
+    
+}
+
+button{
+    height: 60px;
+    width: 180px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.btn-comece{
+    background-color: #4AFFC5;
+}
+
+.logomarca > h1{
+    margin-top: 10px;
+    padding-left: 15px;
+}

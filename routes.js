@@ -4,11 +4,22 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { body, validationResult } = require('express-validator');
+<<<<<<< HEAD
+=======
+const session = require('express-session');
+const path = require('path');
+
+
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 
 dotenv.config();
 
 // Criar um usuário (Create)
+<<<<<<< HEAD
 router.post('/user', async (req, res) => {
+=======
+/*.post('/users', async (req, res) => {
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
     const { name, email, password } = req.body;
     try {
 
@@ -23,12 +34,42 @@ router.post('/user', async (req, res) => {
 
         const newUser = new User({ name, email, password });
         await newUser.save();
-        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        //const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(201).json({ token });
+        res.status(201).json({ newUser });
     } catch (err) {
         res.status(400).json({ error: 'Erro ao criar o usuário', message: err.message });
     }
+});*/
+
+router.post('/users', [
+  body('nome').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
+  body('email').isEmail().withMessage('E-mail inválido'),
+  body('password').isLength({ min: 6 }).withMessage('A senha deve ter pelo menos 6 caracteres'),
+], async (req, res) => {
+    const errors = validationResult(req);
+
+    const {nome, email, password, confirmEmail} = req.body;
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ erros: errors.array() });
+  }
+  const existingUser = await User.findOne({ email });   
+  if (existingUser) {
+      return res.status(400).json({ message: 'Email já registrado' });
+  }
+
+  if(email != confirmEmail){
+    return res.status(400).json({ message: 'Os e-Mails informados são diferentes' })
+  }
+  //const senhaHash = await bcrypt.hash(password, 10);
+  const newUser = new User({ nome, email, password });
+
+  console.log(newUser)
+  await newUser.save();
+  res.status(201).json({ user: newUser,
+    mensagem: 'Cadastro realizado com sucesso!'
+   });
+  //res.json({ mensagem: 'Cadastro realizado com sucesso!' });  
 });
 
 // login
@@ -39,7 +80,7 @@ router.post('/login', async (req, res) => {
   
     try {
       const user = await User.findOne({ email });
-      console.log(user)
+      console.log(user._id)
       if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado' });
       }
@@ -48,13 +89,26 @@ router.post('/login', async (req, res) => {
       if (!isMatch) {
         return res.status(400).json({ message: 'Senha incorreta' });
       }
-  
+
+      
+      req.session.user = { id: user._id.toString(), nome: user.nome };
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      res.json({ token });
+      
+      console.log('logado')
+
+        if (!req.session) {
+            return res.status(500).json({ message: 'Erro na sessão. Tente novamente.' }); 
+        }
+        res.redirect('/home');
+      
     } catch (err) {
       res.status(500).json({ message: 'Erro ao fazer login', error: err.message });
     }
-  });
+});
+
+router.get('/session-test', (req, res) => {
+    res.json({ session: req.session });
+});
 
 // Obter todos os usuários (Read)
 router.get('/users', async (req, res) => {
@@ -88,5 +142,26 @@ router.delete('/users/:id', async (req, res) => {
         res.status(400).json({ error: 'Erro ao deletar o usuário', message: err.message });
     }
 });
+
+// Deletar um usuário (Delete)
+router.delete('/users', async (req, res) => {
+    //const { id } = req.params;
+    try {
+        await User.findByIdAndDelete(id);
+        res.status(204).send();
+    } catch (err) {
+        res.status(400).json({ error: 'Erro ao deletar o usuário', message: err.message });
+    }
+});
+
+// Rota de logout
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        return res.redirect('/login'); // Redireciona para o login após o logout
+    });
+});
+
+//add book
+router.post('/')
 
 module.exports = router;

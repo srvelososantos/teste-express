@@ -7,7 +7,7 @@
 
     <!--bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="/home.css">
 
     <!--font inter-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +49,7 @@
                 <a href="#">
                     <i class="bi bi-person-circle"></i>
                 </a>
-                <p>leonardo.gabriel.veloso@gmail.com</p>
+                <p>Sair</p>
             </li>
         </ul>
     </nav>
@@ -59,9 +59,13 @@
 
         <!--books, search, buttons-->
         <div class="subheader">
-            <p>Books (1)</p>
+            <p>Books</p>
             <input type="text" placeholder="search">
+<<<<<<< HEAD
             <button id="btnAdd" type="file" onclick="openModal()">+  add book</button>
+=======
+            <button type="button" id="btnAdd" onclick="newArchive()">+  add book</button>
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
             <button type="button" id="upgbutton">👑 Upgrade</button>
         </div>
 
@@ -105,6 +109,7 @@
             </table>    
         </div>
 
+<<<<<<< HEAD
          <!-- Janela modal -->
     <div class="modal-overlay" id="modal">
         <div class="modal">
@@ -116,10 +121,24 @@
             </div>
         </div>
     </div>
+=======
+            <!-- Janela modal -->
+        <div class="modal-overlay" id="modal">
+            <div class="modal">
+                <span class="close-btn" onclick="closeModal()">✖</span>
+                <p>Escolha uma opção:</p>
+                <div class="modal-buttons">
+                    <button class="btn-primary">Opção 1</button>
+                    <button class="btn-secondary">Opção 2</button>
+                </div>
+            </div>
+        </div>
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 
     </div>
 
 
-    <script src="home.js"></script>
+    <script src="/home.js">
+    </script>
 </body>
 </html>

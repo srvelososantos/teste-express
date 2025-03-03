@@ -26,7 +26,7 @@
 
             <button class="btn-logar" type="submit">Logar</button>
 
-            <p>Ainda não tem conta? <a href="#">Cadastre-se</a></p>
+            <p>Ainda não tem conta? <a href="/register">Cadastre-se</a></p>
         </div>
     </form>
 
@@ -52,13 +52,19 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(user),
+                body: JSON.stringify({ email, pw }),
             });
-            const data = await response.json();
-            console.log(data) 
+            
+            if (response.redirected) {
+                window.location.href = response.url; // 🔹 Redireciona para /home
+            } else {
+                const data = await response.json();
+                alert('Usuário ou senha incorretos');
+            }
         }catch (error) {
             console.error('Erro:', error);
         }
     });
+    
 </script>
 </html>

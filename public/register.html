@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta nome="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -18,8 +18,8 @@
         <div class="main-container">
             <div id="cadastre">Cadastre-se</div>
     
-            <label for="name">Nome completo</label>
-            <input class="txt" id="name" type="text">
+            <label for="nome">Nome completo</label>
+            <input class="txt" id="nome" type="text">
     
             <label for="email">E-mail</label>
             <input class="txt" id="email" type="text">
@@ -28,44 +28,83 @@
             <input class="txt" id="confirmEmail" type="text">
     
             <label for="password">Senha</label>
-            <input class="txt" id="password" type="text">
-    
+            <input class="txt" id="password" type="password">
+
             <label for="confirm-password">Confirmar senha</label>
-            <input class="txt" id="confirmPassword" type="text">
+            <input class="txt" id="confirmPassword" type="password">
     
             <button class="btn-cadastrar" type="submit">Cadastrar</button>
+<<<<<<< HEAD
+=======
+
+            
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
         </div>
     </form>
 
+    <div id="mensagem"></div>
+    <div id="erros"></div>
+
     <script>
+
         const userForm = document.getElementById('userForm');
 
         userForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
+            //captura os valores dos inputs
+            const nome = document.getElementById('nome').value;
             const email = document.getElementById('email').value;
             const confirmEmail = document.getElementById('confirmEmail').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+<<<<<<< HEAD
             
             
             const user = { name, email, confirmEmail, password, confirmPassword };
             
             try {
+=======
+
+            const user = { nome, email, confirmEmail, password, confirmPassword };
+            
+            //envia os dados para o backend
+            try{
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
                 const response = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(user),
+                    
+                    body: JSON.stringify({ nome, email, confirmEmail, password, confirmPassword }),
                 });
-                const data = await response.json();
-                console.log('Usuário criado:', data);
+                
+                const resultado = await response.json();
 
-            } catch (error) {
-                console.error('Erro:', error);
+                // Reseta mensagens anteriores
+                const mensagemDiv = document.getElementById("mensagem");
+                const errosDiv = document.getElementById("erros");
+                mensagemDiv.innerHTML = "";
+                errosDiv.innerHTML = "";
+
+                if (response.ok) {
+                    mensagemDiv.innerHTML = `<p style="color: green">${resultado.mensagem}</p>`;
+                } else {
+                    console.log(resultado)
+                    let listaErros = "<ul style='color: red'>";
+                    /*resultado.erros.forEach(erro => {
+                        listaErros += `<li>${erro.msg}</li>`;
+                    });*/
+                    listaErros += `<br><li>${resultado.message}</li>`;
+                    listaErros += "</ul>";
+                    errosDiv.innerHTML = listaErros;
+                }
+            }catch(erro){
+                console.error("Erro na requisição:", erro);
+                errosDiv.innerHTML = `<p style="color: red">Erro ao conectar ao servidor. Tente novamente.</p>`;
             }
+            
         });
     </script>
 </body>

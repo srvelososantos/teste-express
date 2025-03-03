@@ -79,4 +79,29 @@ function openModal() {
 
 function closeModal() {
     document.getElementById('modal').style.display = 'none';
+<<<<<<< HEAD
 }
+=======
+}
+
+const logOut = document.getElementById('item-user');
+logOut.addEventListener('click', async () =>{
+    try {
+        const response = await fetch('http://localhost:3000/api/logout',{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        if (response.redirected) {
+            window.location.href = response.url; // 🔹 Redireciona para /login
+        } else {
+            const data = await response.json();
+            alert('Usuário ou senha incorretos');
+        }
+    }catch (error) {
+        console.error('Erro:', error);
+    }
+});
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071

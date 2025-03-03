@@ -33,7 +33,7 @@
             <label for="confirm-password">Confirmar senha</label>
             <input class="txt" id="confirmPassword" type="text">
     
-            <button class="btn-cadastrar" type="submit" onclick="window.location.href='/login'">Cadastrar</button>
+            <button class="btn-cadastrar" type="submit">Cadastrar</button>
         </div>
     </form>
 
@@ -48,9 +48,10 @@
             const confirmEmail = document.getElementById('confirmEmail').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-
+            
+            
             const user = { name, email, confirmEmail, password, confirmPassword };
-
+            
             try {
                 const response = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',

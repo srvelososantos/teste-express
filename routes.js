@@ -3,17 +3,23 @@ const User = require('./models/user');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const { body, validationResult } = require('express-validator');
 
 dotenv.config();
 
 // Criar um usuário (Create)
-router.post('/users', async (req, res) => {
+router.post('/user', async (req, res) => {
     const { name, email, password } = req.body;
     try {
+
+        console.log(name);
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'Email já registrado' });
         }
+        
+
 
         const newUser = new User({ name, email, password });
         await newUser.save();

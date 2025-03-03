@@ -34,8 +34,11 @@
             <input class="txt" id="confirmPassword" type="password">
     
             <button class="btn-cadastrar" type="submit">Cadastrar</button>
+<<<<<<< HEAD
+=======
 
             
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
         </div>
     </form>
 
@@ -55,11 +58,19 @@
             const confirmEmail = document.getElementById('confirmEmail').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+<<<<<<< HEAD
+            
+            
+            const user = { name, email, confirmEmail, password, confirmPassword };
+            
+            try {
+=======
 
             const user = { nome, email, confirmEmail, password, confirmPassword };
             
             //envia os dados para o backend
             try{
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
                 const response = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',
                     headers: {

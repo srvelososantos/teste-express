@@ -4,21 +4,33 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { body, validationResult } = require('express-validator');
+<<<<<<< HEAD
+=======
 const session = require('express-session');
 const path = require('path');
 
 
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 
 dotenv.config();
 
 // Criar um usuário (Create)
+<<<<<<< HEAD
+router.post('/user', async (req, res) => {
+=======
 /*.post('/users', async (req, res) => {
+>>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
     const { name, email, password } = req.body;
     try {
+
+        console.log(name);
+
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'Email já registrado' });
         }
+        
+
 
         const newUser = new User({ name, email, password });
         await newUser.save();

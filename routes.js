@@ -4,22 +4,11 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { body, validationResult } = require('express-validator');
-<<<<<<< HEAD
-=======
-const session = require('express-session');
-const path = require('path');
-
-
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 
 dotenv.config();
 
 // Criar um usuário (Create)
-<<<<<<< HEAD
 router.post('/user', async (req, res) => {
-=======
-/*.post('/users', async (req, res) => {
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
     const { name, email, password } = req.body;
     try {
 
@@ -40,35 +29,46 @@ router.post('/user', async (req, res) => {
     } catch (err) {
         res.status(400).json({ error: 'Erro ao criar o usuário', message: err.message });
     }
-});*/
+});
 
 router.post('/users', [
   body('nome').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
-  body('email').isEmail().withMessage('E-mail inválido'),
+  body('email').isEmail().withMessage('E-mail inválido').notEmpty().withMessage('O email é obrigatório'),
   body('password').isLength({ min: 6 }).withMessage('A senha deve ter pelo menos 6 caracteres'),
+  body('confirmPassword').notEmpty().withMessage('Confirmaçao de senha é obrigatória').custom((value, {req}) => {
+    if(value !== req.body.password){
+        throw new Error('As senhas nao coincidem');
+    }
+    return true;
+  }),
+  body('confirmEmail').custom( async (value, {req}) => {
+    if(value !== req.body.email){
+        throw new Error('Os emails nao coincidem');
+    }
+    const existingUser = await User.findOne({ value });   
+    if (existingUser) {
+        throw new Error('Email ja registrado');
+    }
+    return true;
+  }),
+
 ], async (req, res) => {
+
     const errors = validationResult(req);
 
     const {nome, email, password, confirmEmail} = req.body;
   if (!errors.isEmpty()) {
     return res.status(400).json({ erros: errors.array() });
   }
-  const existingUser = await User.findOne({ email });   
-  if (existingUser) {
-      return res.status(400).json({ message: 'Email já registrado' });
-  }
-
-  if(email != confirmEmail){
-    return res.status(400).json({ message: 'Os e-Mails informados são diferentes' })
-  }
+  
   //const senhaHash = await bcrypt.hash(password, 10);
   const newUser = new User({ nome, email, password });
   /*done */
   console.log(newUser)
   await newUser.save();
-  res.status(201).json({ user: newUser,
-    mensagem: 'Cadastro realizado com sucesso!'
-   });
+  return res.json({ redirect: '/login' });
+  
+   
   //res.json({ mensagem: 'Cadastro realizado com sucesso!' });  
 });
 
@@ -99,7 +99,7 @@ router.post('/login', async (req, res) => {
         if (!req.session) {
             return res.status(500).json({ message: 'Erro na sessão. Tente novamente.' }); 
         }
-        res.redirect('/home');
+        return res.json({ redirect: '/home' });
       
     } catch (err) {
       res.status(500).json({ message: 'Erro ao fazer login', error: err.message });

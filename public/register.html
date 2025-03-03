@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <img src="img/2446925.png" alt="">
+    <img src="img/2446925.png" alt="" onclick="window.location.href='/'" style="cursor: pointer;">
 
     <form action="" id="userForm">
         <div class="main-container">
@@ -32,18 +32,15 @@
 
             <label for="confirm-password">Confirmar senha</label>
             <input class="txt" id="confirmPassword" type="password">
+
+            <div id="mensagem"></div>
+            <div id="erros"></div>
     
             <button class="btn-cadastrar" type="submit">Cadastrar</button>
-<<<<<<< HEAD
-=======
-
-            
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
         </div>
     </form>
 
-    <div id="mensagem"></div>
-    <div id="erros"></div>
+    
 
     <script>
 
@@ -58,19 +55,11 @@
             const confirmEmail = document.getElementById('confirmEmail').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-<<<<<<< HEAD
             
             
             const user = { name, email, confirmEmail, password, confirmPassword };
             
             try {
-=======
-
-            const user = { nome, email, confirmEmail, password, confirmPassword };
-            
-            //envia os dados para o backend
-            try{
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
                 const response = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',
                     headers: {
@@ -82,21 +71,21 @@
                 
                 const resultado = await response.json();
 
-                // Reseta mensagens anteriores
-                const mensagemDiv = document.getElementById("mensagem");
-                const errosDiv = document.getElementById("erros");
-                mensagemDiv.innerHTML = "";
-                errosDiv.innerHTML = "";
-
-                if (response.ok) {
-                    mensagemDiv.innerHTML = `<p style="color: green">${resultado.mensagem}</p>`;
+                if (resultado.redirect) {
+                    window.location.href = resultado.redirect; // 🔹 Redireciona para /home
                 } else {
-                    console.log(resultado)
+
+                    // Reseta mensagens anteriores
+                    const mensagemDiv = document.getElementById("mensagem");
+                    const errosDiv = document.getElementById("erros");
+                    mensagemDiv.innerHTML = "";
+                    errosDiv.innerHTML = "";
+                    
                     let listaErros = "<ul style='color: red'>";
-                    /*resultado.erros.forEach(erro => {
-                        listaErros += `<li>${erro.msg}</li>`;
-                    });*/
-                    listaErros += `<br><li>${resultado.message}</li>`;
+                    resultado.erros.forEach(erro => {
+                        listaErros += `<li style="list-style: none">${erro.msg}</li>`;
+                    });
+                    //listaErros += `<br><li>${resultado.message}</li>`;
                     listaErros += "</ul>";
                     errosDiv.innerHTML = listaErros;
                 }

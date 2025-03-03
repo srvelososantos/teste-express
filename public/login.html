@@ -12,7 +12,7 @@
 </head>
 <body>
     
-    <img src="img/2446925.png" alt="">
+    <img src="img/2446925.png" alt="" onclick="window.location.href='/'" style="cursor: pointer;">
 
     <form action="" id="userForm">
         <div class="main-container">
@@ -22,7 +22,7 @@
             <input class="txt" id="email" type="text">
 
             <label for="password">Senha</label>
-            <input class="txt" id="password" type="text">
+            <input class="txt" id="password" type="password">
 
             <button class="btn-logar" type="submit">Logar</button>
 
@@ -55,10 +55,10 @@
                 body: JSON.stringify({ email, pw }),
             });
             
-            if (response.redirected) {
-                window.location.href = response.url; // 🔹 Redireciona para /home
+            const resultado = await response.json();
+            if (resultado.redirect) {
+                window.location.href = resultado.redirect; // 🔹 Redireciona para /home
             } else {
-                const data = await response.json();
                 alert('Usuário ou senha incorretos');
             }
         }catch (error) {

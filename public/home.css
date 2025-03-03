@@ -218,28 +218,17 @@ th, td {
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
-<<<<<<< HEAD
     
-=======
-    cursor: pointer;
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 }
 
 .btn-primary {
     background: #007bff;
     color: white;
-<<<<<<< HEAD
     cursor: pointer;
-=======
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 }
 
 .btn-secondary {
     background: #6c757d;
-<<<<<<< HEAD
     color: rgb(255, 255, 255);
     cursor: not-allowed;
-=======
-    color: white;
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071
 }

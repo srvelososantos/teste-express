@@ -79,9 +79,6 @@ function openModal() {
 
 function closeModal() {
     document.getElementById('modal').style.display = 'none';
-<<<<<<< HEAD
-}
-=======
 }
 
 const logOut = document.getElementById('item-user');
@@ -102,6 +99,5 @@ logOut.addEventListener('click', async () =>{
         }
     }catch (error) {
         console.error('Erro:', error);
-    }
+    }
 });
->>>>>>> 0508d2abfa239207b448c081f41e2fc22f9e3071

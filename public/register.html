@@ -28,11 +28,10 @@
             <input class="txt" id="confirmEmail" type="text">
     
             <label for="password">Senha</label>
-            <input class="txt" id="password" type="text">
-            
+            <input class="txt" id="password" type="password">
 
             <label for="confirm-password">Confirmar senha</label>
-            <input class="txt" id="confirmPassword" type="text">
+            <input class="txt" id="confirmPassword" type="password">
     
             <button class="btn-cadastrar" type="submit">Cadastrar</button>
 
@@ -81,10 +80,12 @@
                 if (response.ok) {
                     mensagemDiv.innerHTML = `<p style="color: green">${resultado.mensagem}</p>`;
                 } else {
+                    console.log(resultado)
                     let listaErros = "<ul style='color: red'>";
-                    resultado.erros.forEach(erro => {
+                    /*resultado.erros.forEach(erro => {
                         listaErros += `<li>${erro.msg}</li>`;
-                    });
+                    });*/
+                    listaErros += `<br><li>${resultado.message}</li>`;
                     listaErros += "</ul>";
                     errosDiv.innerHTML = listaErros;
                 }

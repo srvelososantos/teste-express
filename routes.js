@@ -33,20 +33,24 @@ dotenv.config();
 router.post('/users', [
   body('nome').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
   body('email').isEmail().withMessage('E-mail inválido'),
-  body('password').isLength({ min: 6 }).withMessage('A senha deve ter pelo menos 6 caracteres')
+  body('password').isLength({ min: 6 }).withMessage('A senha deve ter pelo menos 6 caracteres'),
 ], async (req, res) => {
     const errors = validationResult(req);
 
-    const {nome, email, password} = req.body;
+    const {nome, email, password, confirmEmail} = req.body;
   if (!errors.isEmpty()) {
     return res.status(400).json({ erros: errors.array() });
   }
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email });   
   if (existingUser) {
       return res.status(400).json({ message: 'Email já registrado' });
   }
+
+  if(email != confirmEmail){
+    return res.status(400).json({ message: 'Os e-Mails informados são diferentes' })
+  }
   //const senhaHash = await bcrypt.hash(password, 10);
-  const newUser = new User({ nome, email, password  });
+  const newUser = new User({ nome, email, password });
 
   console.log(newUser)
   await newUser.save();

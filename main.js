@@ -5,17 +5,15 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const routes = require('./routes');
 const path = require('path');
-const bcrypt = require('bcryptjs');
-const router = express.Router();
 const protectedRoutes = require('./protectedRoutes'); // Rotas protegidas
 require("dotenv").config();
 
 const app = express();
 const port = 3000;
 
-// Middleware de sessão (garante que req.session funcione nas rotas)
+// Middleware de sessão
 app.use(session({
-    secret: 'minhaChaveSecreta', // Use uma chave forte e segura
+    secret: '#&*¨&¨%$*%(¨&)&*(GDJFKGHUIYT&¨%tfgyfgg', // Use uma chave forte e segura
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // true se estiver rodando com HTTPS
@@ -51,10 +49,6 @@ app.get('/login', (req, res) =>{
 app.get('/register', (req, res) =>{
     res.sendFile(path.join(__dirname, 'public', '/register.html'))
 });
-/*
-app.get('/home', (req, res) =>{
-    res.sendFile(path.join(__dirname, 'public', '/home.html'))
-});*/
 
 app.listen(port, () =>{
     console.log('server is running in localhost:3000')

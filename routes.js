@@ -1,36 +1,22 @@
 const express = require('express');
 const User = require('./models/user');
+const Book = require('./models/book');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const multer = require('multer');
 const { body, validationResult } = require('express-validator');
 
 dotenv.config();
 
-// Criar um usuário (Create)
-router.post('/user', async (req, res) => {
-    const { name, email, password } = req.body;
-    try {
-
-        console.log(name);
-
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email já registrado' });
-        }
-        
-
-
-        const newUser = new User({ name, email, password });
-        await newUser.save();
-        //const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        res.status(201).json({ newUser });
-    } catch (err) {
-        res.status(400).json({ error: 'Erro ao criar o usuário', message: err.message });
-    }
+// Configuração do Multer (upload de arquivos)
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, 'uploads/'), //  Define a pasta para salvar os arquivos(por enquanto só da para salvar na pasta uploads)
+    filename: (req, file, cb) => cb(null, file.originalname)
 });
+const upload = multer ({ storage });
 
+//  create user
 router.post('/users', [
   body('nome').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
   body('email').isEmail().withMessage('E-mail inválido').notEmpty().withMessage('O email é obrigatório'),
@@ -45,7 +31,9 @@ router.post('/users', [
     if(value !== req.body.email){
         throw new Error('Os emails nao coincidem');
     }
-    const existingUser = await User.findOne({ value });   
+    
+    const existingUser = await User.findOne({ email: value });   
+    console.log(existingUser)
     if (existingUser) {
         throw new Error('Email ja registrado');
     }
@@ -63,7 +51,7 @@ router.post('/users', [
   
   //const senhaHash = await bcrypt.hash(password, 10);
   const newUser = new User({ nome, email, password });
-  /*done */
+  
   console.log(newUser)
   await newUser.save();
   return res.json({ redirect: '/login' });
@@ -72,7 +60,6 @@ router.post('/users', [
   //res.json({ mensagem: 'Cadastro realizado com sucesso!' });  
 });
 
-// login
 // Rota para login do usuário
 router.post('/login', async (req, res) => {
     
@@ -90,11 +77,8 @@ router.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Senha incorreta' });
       }
 
-      
       req.session.user = { id: user._id.toString(), nome: user.nome };
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      
-      console.log('logado')
 
         if (!req.session) {
             return res.status(500).json({ message: 'Erro na sessão. Tente novamente.' }); 
@@ -162,6 +146,51 @@ router.get('/logout', (req, res) => {
 });
 
 //add book
-router.post('/')
+router.post('/upload', upload.single('pdf'), async (req, res) => {
+    const { voice } = req.body;
+    const { originalname } = req.file;
+    const userId = req.session.user.id;
+
+    try{
+    
+        // Criando livro no banco de dados
+        const newBook = new Book({
+            title: originalname.replace('.pdf', ''),
+            author: "Desconhecido", // Pode ser extraído do PDF se necessário
+            voice,
+            status: "processing",
+            progress: 0,
+            filePath: req.file.path,
+            userId: userId
+        });
+    
+        await newBook.save();
+        res.status(201).json(({ message: "livro enviado com sucesso", book: newBook }))
+
+    }catch(error){
+        console.error(error);
+        res.status(500).json({ message: "Erro ao processar o arquivo." });
+    }
+});
+
+//  Rota para obter todos os livros
+router.get('/books', verificarAutenticacao, async (req, res) => {
+    try {
+        
+        const books = await Book.find({ userId:req.session.user.id });
+        res.json(books);
+    } catch (error) {
+        console.log(req.user.id);
+        res.status(500).json({ message: "Erro ao buscar livros." });
+    }
+});
+
+function verificarAutenticacao(req, res, next) {
+    if (!req.session.user) {
+        return res.status(401).json({ message: 'Acesso negado. Faça login para continuar.' });
+    }
+    
+    next(); // Se o usuário estiver logado, continua para a próxima função
+}
 
 module.exports = router;

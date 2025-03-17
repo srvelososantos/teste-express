@@ -1,4 +1,36 @@
 
+window.load = loadBooks();
+/*
+document.addEventListener("DOMContentLoaded", function(){
+    new Tablesort(document.getElementById('bookTable'))
+    
+});
+*/
+
+document.addEventListener("DOMContentLoaded", function() {
+    const table = document.getElementById("bookTable");
+    const tablesort = new Tablesort(table);
+
+    // Adiciona evento de clique para atualizar as setas corretamente
+    document.querySelectorAll("th").forEach(th => {
+        th.addEventListener("click", function() {
+            // Remove estilos de todas as colunas
+            document.querySelectorAll("th").forEach(el => el.classList.remove("sorted"));
+
+            // Verifica se a tabela está ordenada em descendente
+            var isDescending = th.classList.contains("sorted-desc");
+
+            // Adiciona a classe correspondente para exibir a seta correta
+            th.classList.add("sorted");
+            console.log(isDescending);
+            if (isDescending) {
+                th.classList.remove("sorted");
+                    th.classList.add("sorted-desc");
+            }
+        });
+    });
+});
+
 const sideMenuExpand = document.querySelectorAll('#btn-expand-i')
 const menuItem = document.querySelectorAll('.item-menu')
 
@@ -75,10 +107,20 @@ function addLine(){
 //modal
 function openModal() {
     document.getElementById('modal').style.display = 'flex';
+    
 }
 
 function closeModal() {
     document.getElementById('modal').style.display = 'none';
+}
+
+function openModalUpgrade() {
+    document.getElementById('modalUpgrade').style.display = 'flex';
+    
+}
+
+function closeModalUpgrade() {
+    document.getElementById('modalUpgrade').style.display = 'none';
 }
 
 const logOut = document.getElementById('item-user');
@@ -101,3 +143,52 @@ logOut.addEventListener('click', async () =>{
         console.error('Erro:', error);
     }
 });
+
+async function loadBooks(){
+    const response = await fetch('http://localhost:3000/api/books');
+    const books = await response.json();
+    const table = document.getElementById('bookTable2');
+    table.innerHTML = "";
+
+    books.forEach(book => {
+        const row = `<tr>
+            <td>${book.title}</td>
+            <td>${book.status}</td>
+            <td>${book.author}</td>
+            <td>${book.progress}%</td>
+            <td>${book.voice}</td>
+        </tr>`;
+        table.innerHTML += row;
+    });
+}
+
+async function uploadFile(){
+    const fileInput = document.getElementById('fileInput');
+    const voiceSelect = document.getElementById('voiceSelect');
+
+    if (!fileInput.files.length) {
+        alert("Selecione um arquivo PDF!");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("pdf", fileInput.files[0]);
+    formData.append("voice", voiceSelect.value);
+
+    try {
+        console.log('test')
+        const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        closeModal();
+        loadBooks(); // Atualiza a tabela
+        
+    } catch (error) {
+        console.error("Erro no upload:", error);
+    }
+}
+

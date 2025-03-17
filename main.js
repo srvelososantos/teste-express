@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const routes = require('./routes');
 const path = require('path');
+
 const protectedRoutes = require('./protectedRoutes'); // Rotas protegidas
 require("dotenv").config();
 
@@ -53,8 +54,5 @@ app.get('/register', (req, res) =>{
 app.listen(port, () =>{
     console.log('server is running in localhost:3000')
 });
-
-
-
 
 module.exports = app;

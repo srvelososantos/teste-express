@@ -61,8 +61,8 @@
         <div class="subheader">
             <p>Books</p>
             <input type="text" placeholder="search">
-            <button type="button" id="btnAdd" onclick="newArchive()">+  add book</button>
-            <button type="button" id="upgbutton">👑 Upgrade</button>
+            <button type="button" id="btnAdd" onclick="openModal()">+  add book</button>
+            <button type="button" id="upgbutton" onclick="openModalUpgrade()">👑 Upgrade</button>
         </div>
 
         <!--filter, sort, view-->
@@ -82,45 +82,51 @@
         </div>
 
         <!--table-->
-        <div class="table">
+        <div class="table" id="tb" class="sort">
             <table class="files" id="bookTable">
                 <thead>
                     <tr>
-                        <th>TITLE</th>
-                        <th>STATUS</th>
-                        <th>AUTHOR</th>
-                        <th>PROGRESS</th>
-                        <th>VOICE</th>
+                        <th role="columnheader">TITLE</th>
+                        <th role="columnheader">STATUS</th>
+                        <th role="columnheader">AUTHOR</th>
+                        <th role="columnheader">PROGRESS</th>
+                        <th role="columnheader">VOICE</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>otello</td>
-                        <td>ready</td>
-                        <td>shakespeare</td>
-                        <th>25% readed</th>
-                        <td>feminine</td>
-                    </tr>
+                <tbody id="bookTable2">
                 </tbody>
             </table>    
         </div>
 
-         <!-- Janela modal -->
+         <!-- Janela modal add book-->
     <div class="modal-overlay" id="modal">
         <div class="modal">
             <span class="close-btn" onclick="closeModal()">✖</span>
             <p>Escolha uma opção:</p>
             <div class="modal-buttons">
-                <button class="btn-primary">Open file</button>
-                <button class="btn-secondary">Write</button>
+                <input type="file" id="fileInput" accept="application/pdf">
+                <h4>Voice Select</h4>
+                <select id="voiceSelect">
+                    <option value="Male" id="_male">Male</option>
+                    <option value="Female" id="_female">Female</option>
+                </select>
+                <button onclick="uploadFile()" style="height: 30px;">Send</button>
             </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalUpgrade">
+        <div class="modal">
+            <span class="close-btn" onclick="closeModalUpgrade()">✖</span>
+            <h1>Soon</h1>
         </div>
     </div>
 
     </div>
 
-
-    <script src="/home.js">
-    </script>
+    <!-- Carregando Tablesort via CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js" defer></script>
+    <script src="/home.js"></script>
+    
 </body>
 </html>

@@ -81,9 +81,9 @@
                     mensagemDiv.innerHTML = "";
                     errosDiv.innerHTML = "";
                     
-                    let listaErros = "<ul style='color: red'>";
+                    let listaErros = "<ul style='color:red; text-align: center; padding: 0px'>";
                     resultado.erros.forEach(erro => {
-                        listaErros += `<li style="list-style: none">${erro.msg}</li>`;
+                        listaErros += `<li style="list-style: none; font-size: 20px">${erro.msg}</li>`;
                     });
                     //listaErros += `<br><li>${resultado.message}</li>`;
                     listaErros += "</ul>";

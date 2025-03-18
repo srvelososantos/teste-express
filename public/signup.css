@@ -2,19 +2,14 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #B4FFE7;
     flex-direction: column;
+    margin: 0px;
 }
 
 label{
     font-family: "Inter", serif;
     margin: 0px;
     
-}
-
-img{
-    width: 69px;
-    padding: 28px;
 }
 
 .main-container{
@@ -53,3 +48,39 @@ button{
     border-radius: 5px;
     margin-top: 0px;
 }
+
+
+.top-left, .top-right{
+    
+    width: 50%;
+    border: solid black 1px;
+    overflow: hidden;
+}
+
+.top-right{
+    height: 100vh;
+    border: 0px;
+}
+
+.top-left{
+    border: solid black 1px;
+    width: 50%;
+    overflow: hidden;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    justify-content: center;
+    align-items: center;
+}
+
+.main{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+#muie{
+    height: 100vh;
+     
+ }

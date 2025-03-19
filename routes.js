@@ -26,6 +26,9 @@ router.post('/users', [
     if(value !== req.body.password){
         throw new Error('As senhas nao coincidem');
     }
+    if(!temLetrasENumeros(req.body.password)){
+        throw new Error('As senhas nao possuem letras e números');
+    }
     return true;
   }),
   body('confirmEmail').custom( async (value, {req}) => {
@@ -188,6 +191,10 @@ function verificarAutenticacao(req, res, next) {
     }
     
     next(); // Se o usuário estiver logado, continua para a próxima função
+}
+
+function temLetrasENumeros(str) {
+    return /[a-zA-Z]/.test(str) && /\d/.test(str); // Verifica se contém pelo menos uma letra e um número
 }
 
 module.exports = router;

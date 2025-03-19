@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
 
 dotenv.config();
 
@@ -16,7 +17,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer ({ storage });
 
-//  create user
+//  rota para fazer toda a validaçao
 router.post('/users', [
   body('nome').notEmpty().withMessage('O nome é obrigatório').isLength({ min: 3 }).withMessage('O nome deve ter pelo menos 3 caracteres'),
   body('email').isEmail().withMessage('E-mail inválido').notEmpty().withMessage('O email é obrigatório'),
@@ -32,8 +33,7 @@ router.post('/users', [
         throw new Error('Os emails nao coincidem');
     }
     
-    const existingUser = await User.findOne({ email: value });   
-    console.log(existingUser)
+    const existingUser = await User.findOne({ email: value });
     if (existingUser) {
         throw new Error('Email ja registrado');
     }
@@ -49,15 +49,17 @@ router.post('/users', [
     return res.status(400).json({ erros: errors.array() });
   }
   
-  //const senhaHash = await bcrypt.hash(password, 10);
-  const newUser = new User({ nome, email, password });
-  
-  console.log(newUser)
-  await newUser.save();
-  return res.json({ redirect: '/login' });
-  
-   
-  //res.json({ mensagem: 'Cadastro realizado com sucesso!' });  
+  return res.json({ nome, email, password });
+});
+
+//rota para inserir no banco
+router.post('/register', async (req, res) => {
+    const { nome, email, password } = req.body;
+    const newUser = new User({ nome, email, password });
+    console.log(" inserido no banco = " + newUser);
+    const senhaHash = await bcrypt.hash(password, 10);
+    await newUser.save();
+    return res.json({ redirect: '/login', message: "deu certo negão" });
 });
 
 // Rota para login do usuário
@@ -88,10 +90,6 @@ router.post('/login', async (req, res) => {
     } catch (err) {
       res.status(500).json({ message: 'Erro ao fazer login', error: err.message });
     }
-});
-
-router.get('/session-test', (req, res) => {
-    res.json({ session: req.session });
 });
 
 // Obter todos os usuários (Read)
@@ -176,7 +174,6 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
 //  Rota para obter todos os livros
 router.get('/books', verificarAutenticacao, async (req, res) => {
     try {
-        
         const books = await Book.find({ userId:req.session.user.id });
         res.json(books);
     } catch (error) {

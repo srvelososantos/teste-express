@@ -13,16 +13,16 @@ label{
 }
 
 .main-container{
-    background-color: #D9D9D9;
+    background-color: #ffffff;
     width: 326px;
     height: 536px;
     display: flex;
-    justify-content: space-around;
+    gap: 5px;
     flex-direction: column;
     border-radius: 5px;
-    border: solid black 1px;
+    
     padding: 16px;
-
+    
 }
 
 #cadastre{
@@ -43,10 +43,10 @@ label{
 
 button{
     height: 38px;
-    background-color: #009DC0;
-    color: white;
+    background-color: #fdff6a;
+    color: rgb(0, 0, 0);
     border-radius: 5px;
-    margin-top: 0px;
+    margin-top: 3rem;
 }
 
 
@@ -66,7 +66,7 @@ button{
     border: solid black 1px;
     width: 50%;
     overflow: hidden;
-    padding: 50px;
+    
     display: flex;
     flex-direction: column;
     gap: 45px;
@@ -83,4 +83,47 @@ button{
 #muie{
     height: 100vh;
      
- }
+}
+
+hr{
+    width: 80%;
+    border: 1px solid black;
+}
+
+.top-left > img{
+    width: 15%;
+}
+
+#userForm{
+    display: flex;
+    align-self: flex-start;
+    
+}
+
+.formAndErrors{
+    display: flex;
+    width: 50rem;
+}
+
+#erros{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.showErrors{
+    display: flex;
+    justify-content: center;
+}
+
+#erros > ul{
+    margin: 0rem 0rem 10rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+button:disabled{
+    background-color: rgb(187, 187, 187);
+    cursor: not-allowed;
+}

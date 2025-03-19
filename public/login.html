@@ -11,24 +11,34 @@
     <title>Document</title>
 </head>
 <body>
-    
-    <img src="img/2446925.png" alt="" onclick="window.location.href='/'" style="cursor: pointer;">
+    <div class="main">
+        <div class="top-left">
+            <img src="img/stuttbook_logo.png" alt="" onclick="window.location.href='/'" style="cursor: pointer;">
+            <hr>
 
-    <form action="" id="userForm">
-        <div class="main-container">
-            <div id="login">Login</div>
-    
-            <label for="email">E-mail</label>
-            <input class="txt" id="email" type="text">
+            <form action="" id="userForm">
+                <div class="main-container">
+            
+                    <label for="email">E-mail</label>
+                    <input class="txt" id="email" type="text">
+        
+                    <label for="password">Senha</label>
+                    <input class="txt" id="password" type="password">
+        
+                    <button class="btn-logar" type="submit">Logar</button>
+        
+                    <p>Ainda não tem conta? <a href="/register">Cadastre-se</a></p>
+                </div>
+            </form>
 
-            <label for="password">Senha</label>
-            <input class="txt" id="password" type="password">
-
-            <button class="btn-logar" type="submit">Logar</button>
-
-            <p>Ainda não tem conta? <a href="/register">Cadastre-se</a></p>
         </div>
-    </form>
+    
+        <div class="top-right">
+            <img id="muie" src="img/estante_livros.png" alt="">
+        </div>
+    </div>
+
+    
 
 </body>
 

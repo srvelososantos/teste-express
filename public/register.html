@@ -14,31 +14,40 @@
 
     <div class="main">
         <div class="top-left">
-            <form action="" id="userForm">
-                <div class="main-container">
-                    <div id="cadastre">Cadastre-se</div>
+
+            <img src="img/stuttbook_logo.png" alt="" onclick="window.location.href='/'" style="cursor: pointer;">
+            <hr>
+            <div class="formAndErrors">
+                <form action="" id="userForm">
+                    <div class="main-container">
+                
+                        <label for="nome">Username</label>
+                        <input class="txt" id="nome" type="text">
+                
+                        <label for="email">E-mail</label>
+                        <input class="txt" id="email" type="text">
+                
+                        <label for="confirm-email">Confirm E-mail</label>
+                        <input class="txt" id="confirmEmail" type="text">
+                
+                        <label for="password">Password</label>
+                        <input class="txt" id="password" type="password">
             
-                    <label for="nome">Nome completo</label>
-                    <input class="txt" id="nome" type="text">
+                        <label for="confirm-password">Confirm password</label>
+                        <input class="txt" id="confirmPassword" type="password">
             
-                    <label for="email">E-mail</label>
-                    <input class="txt" id="email" type="text">
-            
-                    <label for="confirm-email">Confirmar E-mail</label>
-                    <input class="txt" id="confirmEmail" type="text">
-            
-                    <label for="password">Senha</label>
-                    <input class="txt" id="password" type="password">
-        
-                    <label for="confirm-password">Confirmar senha</label>
-                    <input class="txt" id="confirmPassword" type="password">
-        
-                    <div id="mensagem"></div>
+                        
+                
+                        <button class="btn-cadastrar" type="submit" id="buttonCadastrar">Cadastrar</button>
+                    </div>
+                </form>
+    
+                <div class="showErrors">
+                    
                     <div id="erros"></div>
-            
-                    <button class="btn-cadastrar" type="submit">Cadastrar</button>
                 </div>
-            </form>
+            </div>
+            
         </div>
 
         <div class="top-right">
@@ -53,58 +62,87 @@
     
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("userForm");
+        const inputs = document.querySelectorAll("#userForm input");
+        const submitButton = document.getElementById("buttonCadastrar"); // O botão de cadastrar
+        const errosDiv = document.getElementById("erros");
 
-        const userForm = document.getElementById('userForm');
+        async function validarFormulario() {
+            const nome = document.getElementById("nome").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const confirmEmail = document.getElementById("confirmEmail").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmPassword = document.getElementById("confirmPassword").value.trim();
 
-        userForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            //captura os valores dos inputs
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const confirmEmail = document.getElementById('confirmEmail').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            
-            const user = { name, email, confirmEmail, password, confirmPassword };
-            
             try {
                 const response = await fetch('http://localhost:3000/api/users', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ nome, email, confirmEmail, password, confirmPassword }),
                 });
-                
+
+                const resultado = await response.json();
+                errosDiv.innerHTML = ""; // Limpa mensagens anteriores
+
+                if (resultado.erros && resultado.erros.length > 0) {
+                    let listaErros = "<ul style='color:red; text-align: center; padding: 0px'>";
+                    resultado.erros.forEach(erro => {
+                        listaErros += `<li style="list-style: none; font-size: 14px">${erro.msg}</li>`;
+                    });
+                    listaErros += "</ul>";
+                    errosDiv.innerHTML = listaErros;
+                    
+                    submitButton.disabled = true; // Desativa o botão
+                } else {
+                    submitButton.disabled = false; // Reativa o botão
+                }
+            } catch (erro) {
+                console.error("Erro na validação:", erro);
+                errosDiv.innerHTML = `<p style="color: red">Erro ao conectar ao servidor. Tente novamente.</p>`;
+                submitButton.disabled = true; // Em caso de erro, mantém o botão desativado
+            }
+        }
+
+        // Adiciona evento "input" a todos os campos para validar em tempo real
+        inputs.forEach(input => {
+            input.addEventListener("input", validarFormulario);
+        });
+
+        // Envio final do formulário (apenas se a validação já passou)
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            
+            if (submitButton.disabled) return; // Se o botão estiver desativado, não faz nada
+
+            try {
+                const response = await fetch('http://localhost:3000/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nome: document.getElementById("nome").value.trim(),
+                        email: document.getElementById("email").value.trim(),
+                        confirmEmail: document.getElementById("confirmEmail").value.trim(),
+                        password: document.getElementById("password").value.trim(),
+                        confirmPassword: document.getElementById("confirmPassword").value.trim(),
+                    }),
+                });
+
                 const resultado = await response.json();
 
                 if (resultado.redirect) {
-                    window.location.href = resultado.redirect; // 🔹 Redireciona para /home
+                    window.location.href = resultado.redirect; // Redireciona para /home
                 } else {
-
-                    // Reseta mensagens anteriores
-                    const mensagemDiv = document.getElementById("mensagem");
-                    const errosDiv = document.getElementById("erros");
-                    mensagemDiv.innerHTML = "";
-                    errosDiv.innerHTML = "";
-                    
-                    let listaErros = "<ul style='color:red; text-align: center; padding: 0px'>";
-                    resultado.erros.forEach(erro => {
-                        listaErros += `<li style="list-style: none; font-size: 20px">${erro.msg}</li>`;
-                    });
-                    //listaErros += `<br><li>${resultado.message}</li>`;
-                    listaErros += "</ul>";
-                    errosDiv.innerHTML = listaErros;
+                    errosDiv.innerHTML = `<p style="color: green">${resultado.message}</p>`;
                 }
-            }catch(erro){
-                console.error("Erro na requisição:", erro);
+            } catch (erro) {
+                console.error("Erro ao cadastrar:", erro);
                 errosDiv.innerHTML = `<p style="color: red">Erro ao conectar ao servidor. Tente novamente.</p>`;
             }
-            
         });
+
+    });
+
     </script>
 </body>
 </html>

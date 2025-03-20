@@ -85,3 +85,11 @@ button{
     align-self: flex-start;
     margin-left: 6rem;
  }
+
+ @media screen and (max-width: 1366px){
+
+    .top-left{
+        margin-top: 2rem;
+        gap: 30px;
+    }
+}

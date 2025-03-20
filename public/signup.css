@@ -38,7 +38,7 @@ label{
 .txt{
     height: 30px;
     border-radius: 3px;
-    
+
 }
 
 button{
@@ -126,4 +126,22 @@ hr{
 button:disabled{
     background-color: rgb(187, 187, 187);
     cursor: not-allowed;
+}
+
+@media screen and (max-width: 1366px){
+    .formAndErrors{
+        width: auto;
+    }
+
+    #erros > ul{
+        margin: 0rem 0rem 10rem 2rem;
+    }
+
+    .top-left{
+        gap: 10px;
+    }
+
+    .top-left > img{
+        margin-top: 8rem;
+    }
 }

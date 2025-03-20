@@ -114,6 +114,13 @@
             event.preventDefault();
             
             if (submitButton.disabled) return; // Se o botão estiver desativado, não faz nada
+            if ((!submitButton.disabled) && 
+                document.getElementById("nome").value == "" &&
+                document.getElementById("email").value == "" &&
+                document.getElementById("confirmEmail").value == "" &&
+                document.getElementById("password").value == "" &&
+                document.getElementById("confirmPassword").value == "" 
+            ) return;
 
             try {
                 const response = await fetch('http://localhost:3000/api/register', {

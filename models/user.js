@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    created_at:{
+        type: Date,
+        required: true,
+    },
+    updated_at:{
+        type: Date,
+        required: true,
     }
 });
 

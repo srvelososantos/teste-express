@@ -58,7 +58,8 @@ router.post('/users', [
 //rota para inserir no banco
 router.post('/register', async (req, res) => {
     const { nome, email, password } = req.body;
-    const newUser = new User({ nome, email, password });
+    const dt = new Date()
+    const newUser = new User({ nome, email, password, dt });
     console.log(" inserido no banco = " + newUser);
     const senhaHash = await bcrypt.hash(password, 10);
     await newUser.save();

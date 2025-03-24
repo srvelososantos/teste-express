@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 */
 
+const greetUser = document.getElementById("usergreetName")
+greetUser.innerHTML = `<p>bem vindo, ${userName}</p>`; 
+
 document.addEventListener("DOMContentLoaded", function() {
     const table = document.getElementById("bookTable");
     const tablesort = new Tablesort(table);

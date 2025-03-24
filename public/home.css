@@ -43,6 +43,7 @@ ul li.ativo{
 
 #item-user{
     justify-items: flex-end;
+    margin-top: 45rem;
 }
 
 nav.sidemenu{
@@ -52,6 +53,8 @@ nav.sidemenu{
     padding: 30px 0 40px 1%;
     overflow: hidden;
     position: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
 nav.sidemenu.expand{
@@ -166,6 +169,10 @@ nav.sidemenu.expand{
     }
     .subheader > input{
         width: 400px;
+    }
+
+    #item-user{
+        margin-top: 19rem;
     }
 }
 

@@ -2,7 +2,7 @@ const express = require('express');
 const User = require('./models/user');
 const Book = require('./models/book');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
+//const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
@@ -59,7 +59,7 @@ router.post('/users', [
 router.post('/register', async (req, res) => {
     const { nome, email, password } = req.body;
     const dt = new Date()
-    const newUser = new User({ nome, email, password, dt });
+    const newUser = new User({ nome:nome, email:email, password:password, created_at:dt, updated_at:dt });
     console.log(" inserido no banco = " + newUser);
     const senhaHash = await bcrypt.hash(password, 10);
     await newUser.save();
@@ -73,7 +73,6 @@ router.post('/login', async (req, res) => {
   
     try {
       const user = await User.findOne({ email });
-      console.log(user._id)
       if (!user) {
         return res.status(400).json({ message: 'Usuário não encontrado' });
       }
@@ -84,7 +83,7 @@ router.post('/login', async (req, res) => {
       }
 
       req.session.user = { id: user._id.toString(), nome: user.nome };
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      //const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         if (!req.session) {
             return res.status(500).json({ message: 'Erro na sessão. Tente novamente.' }); 
@@ -94,6 +93,10 @@ router.post('/login', async (req, res) => {
     } catch (err) {
       res.status(500).json({ message: 'Erro ao fazer login', error: err.message });
     }
+});
+
+router.get('/getuserData', async (req, res) => {
+    res.status(500).json( {username: req.session.user} )
 });
 
 // Obter todos os usuários (Read)

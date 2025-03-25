@@ -63,7 +63,7 @@ router.post('/register', async (req, res) => {
     console.log(" inserido no banco = " + newUser);
     const senhaHash = await bcrypt.hash(password, 10);
     await newUser.save();
-    return res.json({ redirect: '/login', message: "deu certo negão" });
+    return res.json({ redirect: '/login' });
 });
 
 // Rota para login do usuário

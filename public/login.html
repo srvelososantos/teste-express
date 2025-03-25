@@ -51,11 +51,6 @@
         const email = document.getElementById('email').value
         const pw = document.getElementById('password').value
 
-        const user = { email, pw }
-        console.log(email)
-        console.log(pw)
-        console.log(user)
-
         try {
             const response = await fetch('http://localhost:3000/api/login',{
                 method: 'POST',

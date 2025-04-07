@@ -42,7 +42,15 @@ ul li.ativo{
 }
 
 #item-user{
-    margin-top: 45rem;
+    margin-top: 36rem;
+    flex-direction: column;
+    display: none;
+    gap: 5px;
+}
+
+#item-user:hover{
+    cursor: auto;
+    background-color: #D9D9D9;
 }
 
 nav.sidemenu{
@@ -63,11 +71,6 @@ nav.sidemenu.expand{
 
 .sidemenu i{
     font-size: 1.7rem;
-}
-
-#item-user > p{
-    font-size: 17px;
-    flex-wrap: wrap;
 }
 
 .btn-expand{
@@ -172,7 +175,7 @@ nav.sidemenu.expand{
 
     #item-user{
         margin-top: 19rem;
-        display: flex;
+        display: none;
         flex-direction: column;
     }
 }
@@ -293,3 +296,55 @@ th.sorted-desc::after {
     border: #000000 solid .5px;
 }
 
+.upgleft, .upgright{
+    border: solid black 1px;
+    width: 20vw;
+    height: 30vw;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.modal div > div{
+    display: flex;
+    gap: 1rem;
+}
+
+.modal div div > button{
+    margin-bottom: 1.5rem;
+    height: 1.5rem;
+    width: 8rem;
+    align-self: center;
+    justify-self: flex-end;
+    background-color: gold;
+    color: black;
+    margin-top: 14rem;
+}
+
+#usergreetName{
+    padding: 0;
+}
+
+#usergreetMail{
+    padding: 0;
+    font-size: 17px;
+}
+
+#logoff:hover{
+    cursor: pointer;
+}
+
+#logoff{
+    color: #aa0000;
+    padding: 0;
+}
+
+th{
+    background-color: #6c757d; 
+    color: white;
+}
+
+tr:hover{
+    background-color: #6c757d;
+    color: white;
+}

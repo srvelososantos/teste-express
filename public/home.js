@@ -14,7 +14,7 @@ async function userData ( ){
     console.log("dados do usuario:" + re.nome, re.email)
 
     const greetUser = document.getElementById("usergreetName")
-    greetUser.innerHTML = `<p>bem vindo, ${re.nome}</p>`; 
+    greetUser.innerHTML = `${re.nome}</p>`; 
 
     const greetEmail = document.getElementById("usergreetMail")
     greetEmail.innerHTML = `<p>${re.email}</p>`
@@ -188,7 +188,7 @@ function closeModalUpgrade() {
     document.getElementById('modalUpgrade').style.display = 'none';
 }
 
-const logOut = document.getElementById('item-user');
+const logOut = document.getElementById('logoff');
 logOut.addEventListener('click', async () =>{
     try {
         const response = await fetch('http://localhost:3000/api/logout',{
@@ -227,17 +227,26 @@ async function loadBooks(){
     });
 }
 
-async function uploadFile(){
+async function uplFl() {
     const fileInput = document.getElementById('fileInput');
-    const voiceSelect = document.getElementById('voiceSelect');
+    const fileList = document.getElementById('fileList');
 
     if (!fileInput.files.length) {
-        alert("Selecione um arquivo PDF!");
-        return;
+        if(fileList.hasChildNodes()){
+            uploadFile(selectedFile)
+        }
+    }else{
+        uploadFile(fileInput.files[0])
     }
 
+    
+}
+
+async function uploadFile(file){
+    const voiceSelect = document.getElementById('voiceSelect');
+
     const formData = new FormData();
-    formData.append("pdf", fileInput.files[0]);
+    formData.append("pdf", file);
     formData.append("voice", voiceSelect.value);
 
     try {
@@ -257,3 +266,52 @@ async function uploadFile(){
     }
 }
 
+//              DRAG AND DROP FILES
+
+let selectedFile = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const dropzone = document.getElementById("dropzone");
+    const fileList = document.getElementById("fileList");
+  
+    // Evita comportamento padrão de abrir arquivo no navegador
+    ["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+      dropzone.addEventListener(eventName, e => e.preventDefault());
+      dropzone.addEventListener(eventName, e => e.stopPropagation());
+    });
+  
+    // Estiliza quando o arquivo está sobre a zona de drop
+    dropzone.addEventListener("dragover", () => {
+      dropzone.classList.add("hover");
+    });
+  
+    dropzone.addEventListener("dragleave", () => {
+      dropzone.classList.remove("hover");
+    });
+
+    
+  
+    // Quando o arquivo é solto
+    dropzone.addEventListener("drop", (e) => {
+      dropzone.classList.remove("hover");
+      const files = e.dataTransfer.files;
+      
+      if(files.length > 0){
+        selectedFile = files[0]
+      }
+
+      mostrarArquivos(files)
+    });
+  
+    function mostrarArquivos(files) {
+        document.getElementById('fileInput').style.display = 'none'
+      fileList.innerHTML = "<h4>Arquivos recebidos:<br></h4>";
+      Array.from(files).forEach(file => {
+        const item = document.createElement("div");
+        item.textContent = `📄 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        fileList.appendChild(item);
+      });
+    }
+  
+    
+  });

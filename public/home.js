@@ -7,8 +7,70 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 */
 
-const greetUser = document.getElementById("usergreetName")
-greetUser.innerHTML = `<p>bem vindo, bosta</p>`; 
+async function userData ( ){
+    const response = await fetch('http://localhost:3000/api/getuserData')
+    const re = await response.json()
+
+    console.log("dados do usuario:" + re.nome, re.email)
+
+    const greetUser = document.getElementById("usergreetName")
+    greetUser.innerHTML = `<p>bem vindo, ${re.nome}</p>`; 
+
+    const greetEmail = document.getElementById("usergreetMail")
+    greetEmail.innerHTML = `<p>${re.email}</p>`
+}
+
+userData();
+
+const menu = document.getElementById("sidemenu-main")
+const div = document.getElementById("item-user")
+
+const observer = new MutationObserver( () => {
+
+    if(!menu.classList.contains("expand")){
+        div.style.display = "none";
+        console.log("bosta")
+    }else{
+        div.style.display = "flex"
+    }
+});
+
+observer.observe(menu, { attributes: true, attributeFilter: ['class'] });
+    
+
+//          SEARCH
+document.addEventListener("DOMContentLoaded", () => {
+    const inputBusca = document.getElementById("searchBox");
+    const divResultados = document.getElementById("resultados");
+
+    // Função para buscar os dados do servidor
+    async function buscarUsuarios(termo) {
+        if (termo.length < 2) { 
+            divResultados.innerHTML = ""; // Limpa os resultados se tiver menos de 2 caracteres
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/buscar?termo=${termo}`);
+            const usuarios = await response.json();
+
+            // Atualiza a lista de resultados
+            divResultados.innerHTML = usuarios
+                .map(book => `<div class="resultado-item" style="text-align: center; font-size:1.4rem; 
+                    ">${book.title}</div>`)
+                .join('');
+        } catch (error) {
+            console.error("Erro ao buscar usuários:", error);
+        }
+    }
+
+    // Captura o evento de digitação no campo de busca
+    inputBusca.addEventListener("input", () => {
+        buscarUsuarios(inputBusca.value);
+    });
+});
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const table = document.getElementById("bookTable");

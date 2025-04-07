@@ -82,7 +82,8 @@ router.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Senha incorreta' });
       }
 
-      req.session.user = { id: user._id.toString(), nome: user.nome };
+      req.session.user = { id: user._id.toString(), nome: user.nome, email:user.email };
+      console.log(req.session.user)
       //const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         if (!req.session) {
@@ -96,7 +97,11 @@ router.post('/login', async (req, res) => {
 });
 
 router.get('/getuserData', async (req, res) => {
-    res.status(500).json( {username: req.session.user} )
+    if (!req.session.user) {
+        return res.status(401).json({ message: "Usuário não autenticado" });
+    }
+
+    res.json(req.session.user);
 });
 
 // Obter todos os usuários (Read)
@@ -175,6 +180,26 @@ router.post('/upload', upload.single('pdf'), async (req, res) => {
     }catch(error){
         console.error(error);
         res.status(500).json({ message: "Erro ao processar o arquivo." });
+    }
+});
+
+//      SEARCH
+
+router.get('/buscar', async (req, res) => {
+    const { termo } = req.query; // Obtém o termo da URL (query string)
+
+    if (!termo) return res.json([]); // Se não houver termo, retorna lista vazia
+
+    try {
+        // Busca usuários cujo nome contenha o termo digitado (case insensitive)
+        const books = await Book.find({ 
+            title: new RegExp(termo, 'i') 
+        }).limit(5); // Limita os resultados para evitar excesso de dados
+
+        res.json(books);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erro ao buscar usuários" });
     }
 });
 

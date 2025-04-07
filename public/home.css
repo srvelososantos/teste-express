@@ -42,7 +42,6 @@ ul li.ativo{
 }
 
 #item-user{
-    justify-items: flex-end;
     margin-top: 45rem;
 }
 
@@ -67,7 +66,7 @@ nav.sidemenu.expand{
 }
 
 #item-user > p{
-    font-size: 20px;
+    font-size: 17px;
     flex-wrap: wrap;
 }
 
@@ -173,6 +172,8 @@ nav.sidemenu.expand{
 
     #item-user{
         margin-top: 19rem;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -281,5 +282,14 @@ th.sorted-desc::after {
     cursor: not-allowed;
 }
 
+.resultado-item:hover{
+    background-color: grey;
+    color: white;
+    cursor: pointer;
+    border: #6c757d solid 1.5px;
+}
 
+.resultado-item{
+    border: #000000 solid .5px;
+}
 

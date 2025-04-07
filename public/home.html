@@ -17,7 +17,7 @@
 <body>
 
     <!--menu lateral-->
-    <nav class="sidemenu">
+    <nav class="sidemenu" id="sidemenu-main">
         <div class="btn-expand">
             <i class="bi bi-list" id="btn-expand-i"></i>
             <p>Stutt </p>
@@ -46,11 +46,9 @@
             </li>
 
             <li class="item-menu" id="item-user">
-                <a href="#">
-                    <i class="bi bi-person-circle"></i>
-                </a>
+                
                 <p id="usergreetName"></p>
-                <p id="usergreetPassword"></p>
+                <p id="usergreetMail"></p>
                 <p>Sair</p>
             </li>
         </ul>
@@ -62,11 +60,11 @@
         <!--books, search, buttons-->
         <div class="subheader">
             <p>Books</p>
-            <input type="text" placeholder="search">
+            <input type="search" placeholder="search" id="searchBox">
             <button type="button" id="btnAdd" onclick="openModal()">+  add book</button>
             <button type="button" id="upgbutton" onclick="openModalUpgrade()">👑 Upgrade</button>
         </div>
-
+        <div id="resultados" style="display: flex; justify-content: center; flex-direction:column;"></div>
         <!--filter, sort, view-->
         <div class="filter">
             <div class="filt">

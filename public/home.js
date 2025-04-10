@@ -315,3 +315,60 @@ document.addEventListener("DOMContentLoaded", () => {
   
     
   });
+
+
+//             VIEW DIV
+
+document.getElementById('viewBt').addEventListener("click", () => {
+    const tabela = document.getElementById("bookTable");
+    const grade = document.getElementById("gradeUsuarios");
+
+    if(tabela.style.display != "none"){
+        // Muda para grade
+        const linhas = tabela.querySelectorAll("tbody tr");
+        grade.innerHTML = ""; // limpa a grade
+
+        linhas.forEach(linha => {
+            const colunas = linha.querySelectorAll("td");
+
+            const card = document.createElement("div");
+            card.className = "card-usuario";
+            card.innerHTML = `<i class="bi bi-book"></i>
+                <strong>Title:</strong> ${colunas[0].textContent}<br>
+                <strong>Status:</strong> ${colunas[1].textContent}<br>
+                <strong>Author:</strong> ${colunas[2].textContent}<br>
+                <strong>Progress:</strong> ${colunas[3].textContent}<br>
+                <strong>Voice:</strong> ${colunas[4].textContent}
+            `;
+
+            grade.appendChild(card);
+        });
+
+        tabela.style.display = "none";
+        grade.style.display = "grid";
+    }else {
+        // Volta para tabela
+        grade.style.display = "none";
+        tabela.style.display = "table";
+    }
+})
+
+//          SETTINGS
+document.getElementById('settingsMenu').addEventListener('click', () => {
+    document.getElementById('ft').style.display = 'none'
+    document.getElementById('tb').style.display = 'none'
+    document.getElementById('settingsContainer').style.display = 'block'
+    document.getElementById('gradeUsuarios').style.display = 'none'
+
+})
+
+document.getElementById('homeMenu').addEventListener('click', () => {
+    document.getElementById('ft').style.display = 'flex'
+    if(document.getElementById('tb').style.display == 'none'){
+        document.getElementById('bookTable').style.display = 'flex'
+    }else{
+        document.getElementById('bookTable').style.display = 'none'
+    }
+    document.getElementById('settingsContainer').style.display = 'none'
+    
+})

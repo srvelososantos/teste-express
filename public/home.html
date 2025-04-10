@@ -24,7 +24,7 @@
         </div>
 
         <ul class="">
-            <li class="item-menu ativo">
+            <li class="item-menu ativo" id="homeMenu">
                 <a href="#">
                     <i class="bi bi-house-door"></i>
                 </a>
@@ -38,7 +38,7 @@
                 <p>Collection</p>
             </li>
 
-            <li class="item-menu">
+            <li class="item-menu" id="settingsMenu">
                 <a href="#">
                     <i class="bi bi-gear"></i>
                 </a>
@@ -66,7 +66,7 @@
         </div>
         <div id="resultados" style="display: flex; justify-content: center; flex-direction:column;"></div>
         <!--filter, sort, view-->
-        <div class="filter">
+        <div class="filter" id="ft">
             <div class="filt">
                 <i class="bi bi-sliders"></i>
                 <p>Filter</p>
@@ -75,7 +75,7 @@
                 <i class="bi bi-sort-down"></i>
                 <p>Sort</p>
             </div>
-            <div class="filt">
+            <div class="filt" id="viewBt">
                 <i class="bi bi-grid-3x3"></i>
                 <p>View</p>
             </div>
@@ -97,6 +97,28 @@
                 </tbody>
             </table>    
         </div>
+
+        <div id="settingsContainer">
+            <h4>Settings</h4>
+            <form action="" id="userForm">
+                <label for="email">Email</label>
+                <input type="text" id="email" class="txt">
+
+                <label for="password">Password</label>
+                <input type="password" id="password" class="txt">
+
+                <input type="button" id="pwChange" type="submit">
+            </form>
+            <div>
+                <button>Delete Account</button>
+                <button>Cancel Subscription</button>
+                <button>History Payments</button>
+                <button>Subscription</button>
+            </div>
+            
+        </div>
+
+        <div id="gradeUsuarios" style="display: none;"></div>
 
          <!-- Janela modal add book-->
     <div class="modal-overlay" id="modal">

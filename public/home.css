@@ -174,7 +174,7 @@ nav.sidemenu.expand{
     }
 
     #item-user{
-        margin-top: 19rem;
+        margin-top: 17rem;
         display: none;
         flex-direction: column;
     }
@@ -347,4 +347,32 @@ th{
 tr:hover{
     background-color: #6c757d;
     color: white;
+    cursor: pointer;
+}
+
+/*          CARD VIEW            */
+#gradeUsuarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 20px 0 30px;
+}
+
+.card-usuario {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: sans-serif;
+}
+
+#settingsContainer{
+    height: fit-content;
+    display: none;
+}
+
+#settingsContainer > div{
+    display: flex;
+    gap: 15px;
+
 }

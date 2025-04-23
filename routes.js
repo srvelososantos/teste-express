@@ -115,15 +115,18 @@ router.get('/users', async (req, res) => {
 });
 
 // Atualizar um usuário (Update)
-router.put('/users/:id', async (req, res) => {
-    const { id } = req.params;
-    const { name, email } = req.body;
+router.put('/users/updpw', async (req, res) => {
+    const { newpassword } = req.body;
+    console.log(newpassword)
     try {
-        const updatedUser = await User.findByIdAndUpdate(id, { name, email }, { new: true });
-        res.json(updatedUser);
+        if(session.user){
+            const updatedUser = await User.findByIdAndUpdate(session.user.id, { password:newpassword }, { new: true });
+            res.json(updatedUser);
+        }
     } catch (err) {
         res.status(400).json({ error: 'Erro ao atualizar o usuário', message: err.message });
     }
+
 });
 
 // Deletar um usuário (Delete)
@@ -193,7 +196,8 @@ router.get('/buscar', async (req, res) => {
     try {
         // Busca usuários cujo nome contenha o termo digitado (case insensitive)
         const books = await Book.find({ 
-            title: new RegExp(termo, 'i') 
+            title: new RegExp(termo, 'i'),
+            userId: req.session.user.id 
         }).limit(5); // Limita os resultados para evitar excesso de dados
 
         res.json(books);

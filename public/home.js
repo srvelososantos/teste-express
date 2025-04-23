@@ -225,6 +225,7 @@ async function loadBooks(){
         </tr>`;
         table.innerHTML += row;
     });
+    
 }
 
 async function uplFl() {
@@ -319,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //             VIEW DIV
 
-document.getElementById('viewBt').addEventListener("click", () => {
+function gridView(){
     const tabela = document.getElementById("bookTable");
     const grade = document.getElementById("gradeUsuarios");
 
@@ -351,24 +352,31 @@ document.getElementById('viewBt').addEventListener("click", () => {
         grade.style.display = "none";
         tabela.style.display = "table";
     }
-})
+}
+
+document.getElementById('viewBt').addEventListener("click", gridView)
 
 //          SETTINGS
 document.getElementById('settingsMenu').addEventListener('click', () => {
     document.getElementById('ft').style.display = 'none'
     document.getElementById('tb').style.display = 'none'
-    document.getElementById('settingsContainer').style.display = 'block'
+    document.getElementById('settingsContainer').style.display = 'flex'
+    document.getElementById('settingsContainer').style.flexDirection = 'column'
     document.getElementById('gradeUsuarios').style.display = 'none'
 
 })
 
 document.getElementById('homeMenu').addEventListener('click', () => {
     document.getElementById('ft').style.display = 'flex'
-    if(document.getElementById('tb').style.display == 'none'){
-        document.getElementById('bookTable').style.display = 'flex'
-    }else{
-        document.getElementById('bookTable').style.display = 'none'
-    }
     document.getElementById('settingsContainer').style.display = 'none'
-    
+    document.getElementById('tb').style.display = 'block'
+    document.getElementById('gradeUsuarios').style.display = 'none'
+    document.getElementById('bookTable').style.display = ''
 })
+
+document.getElementById('collectionMenu').addEventListener('click', () => {
+    gridView()
+    document.getElementById('settingsContainer').style.display = 'none'
+    document.getElementById('ft').style.display = 'none'
+})
+

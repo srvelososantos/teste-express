@@ -178,6 +178,10 @@ nav.sidemenu.expand{
         display: none;
         flex-direction: column;
     }
+
+    #settingsContainer{
+        margin-left: 2rem;
+    }
 }
 
 
@@ -366,13 +370,46 @@ tr:hover{
     font-family: sans-serif;
 }
 
+/*           SETTINGS             */
 #settingsContainer{
-    height: fit-content;
+    height: 18rem;
+    width: 60rem;
+    border: solid black 1px;
+    background-color: #e7e6ff;
     display: none;
+    gap: 20px;
+    padding: 1rem;
 }
 
 #settingsContainer > div{
     display: flex;
     gap: 15px;
 
+}
+
+.btn-style{
+    cursor: pointer;
+    border-radius: 15%;
+    height: 2rem;
+}
+
+.redbtn{
+    background-color: #ffa7a7;
+    cursor: pointer;
+    
+    height: 2rem;
+}
+
+.blbtn{
+    background-color: #80a2ff;
+    cursor: pointer;
+    
+    height: 2rem;
+}
+
+.ylbtn{
+    background-color: #feffa8;
+    cursor: pointer;
+    
+    height: 2rem;
 }

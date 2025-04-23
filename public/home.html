@@ -31,7 +31,7 @@
                 <p>Home</p>
             </li>
 
-            <li class="item-menu">
+            <li class="item-menu" id="collectionMenu">
                 <a href="#">
                     <i class="bi bi-collection"></i>
                 </a>
@@ -99,21 +99,26 @@
         </div>
 
         <div id="settingsContainer">
-            <h4>Settings</h4>
+            <h2>Settings</h2>
             <form action="" id="userForm">
                 <label for="email">Email</label>
-                <input type="text" id="email" class="txt">
-
+                <input type="text" id="email" class="txt" style="margin-left: 2rem;">
+                    <br><br>
                 <label for="password">Password</label>
                 <input type="password" id="password" class="txt">
+                <br><br>
+                <label for="newpassword">New Password</label>
+                <input type="password" id="newpassword" class="txt">
 
                 <input type="button" id="pwChange" type="submit">
+                <br><br><br>
+                <button type="button" id="pwChange" type="submit" class="blbtn" class="btn-style">Change Password</button>
             </form>
             <div>
-                <button>Delete Account</button>
-                <button>Cancel Subscription</button>
-                <button>History Payments</button>
-                <button>Subscription</button>
+                <button class="redbtn" class="btn-style">Delete Account</button>
+                <button class="redbtn" class="btn-style">Cancel Subscription</button>
+                <button class="blbtn" class="btn-style">History Payments</button>
+                <button class="ylbtn" class="btn-style">Subscription</button>
             </div>
             
         </div>

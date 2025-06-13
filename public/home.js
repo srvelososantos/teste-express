@@ -380,3 +380,14 @@ document.getElementById('collectionMenu').addEventListener('click', () => {
     document.getElementById('ft').style.display = 'none'
 })
 
+// ARCHIVE OPENER
+
+document.getElementById("bookTable2").addEventListener("click", async (event) => {
+  const row = event.target.closest("tr");
+  if (!row) return;
+
+  const title = row.cells[0].textContent; // por exemplo, pega o título da linha
+  console.log("Você clicou no livro:", title);
+
+  // Aqui você pode buscar o livro pelo título ou ID no backend
+});

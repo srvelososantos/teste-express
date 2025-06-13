@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reprodutor de Audiobook</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="sidemenu expand">
+    <div class="top-controls">
+      <button onclick="goHome()">🏠</button>
+      <button onclick="searchContent()">🔍</button>
+      <button onclick="toggleMenu()">📌</button>
+    </div>
+
+    <div class="chapters-list" id="chaptersList"></div>
+
+    <div class="bottom-controls">
+      <button onclick="showChapters()">Capítulos</button>
+      <button onclick="showBookmarks()">Marcadores</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="top-bar">
+      <button onclick="toggleView()">Change View</button>
+    </div>
+
+    <div class="book-view" id="bookView">
+      <img id="coverImg" src="" alt="Book Cover" />
+      <audio id="audioPlayer" controls></audio>
+    </div>
+
+    <div class="text-view" id="textView" style="display:none;">
+      <div id="bookText"></div>
+    </div>
+  </div>
+
+  <script src="/js/player.js"></script>
+</body>
+</html>

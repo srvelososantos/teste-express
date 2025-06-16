@@ -7,19 +7,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const res = await fetch(`/api/books/${bookId}`);
   const book = await res.json();
 
-  document.getElementById('coverImg').src = `/img/${book.cover}`;
-  document.getElementById('audioPlayer').src = `/audio/${book.chapters[0].file}`;
+  console.log(book)
 
-  const chaptersList = document.getElementById('chaptersList');
-  book.chapters.forEach((ch, i) => {
-    const btn = document.createElement('button');
-    btn.textContent = `Capítulo ${i + 1}`;
-    btn.onclick = () => {
-      document.getElementById('audioPlayer').src = `/audio/${ch.file}`;
-      document.getElementById('audioPlayer').play();
-    };
-    chaptersList.appendChild(btn);
-  });
+  document.getElementById('book-title').innerHTML = book.title
 
   document.getElementById('bookText').innerText = book.textContent || 'Texto do livro indisponível.';
 });
@@ -32,3 +22,8 @@ function toggleView() {
   bookView.style.display = isBookViewVisible ? 'none' : 'flex';
   textView.style.display = isBookViewVisible ? 'flex' : 'none';
 }
+
+document.getElementById("gohome").addEventListener('click', () => {
+  window.location.href = "/home"
+})
+

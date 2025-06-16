@@ -216,7 +216,7 @@ async function loadBooks(){
     table.innerHTML = "";
 
     books.forEach(book => {
-        const row = `<tr>
+        const row = `<tr data-id="${book._id}"> 
             <td>${book.title}</td>
             <td>${book.status}</td>
             <td>${book.author}</td>
@@ -387,7 +387,11 @@ document.getElementById("bookTable2").addEventListener("click", async (event) =>
   if (!row) return;
 
   const title = row.cells[0].textContent; // por exemplo, pega o título da linha
-  console.log("Você clicou no livro:", title);
+  const bookId = row.getAttribute("data-id");
+
+  console.log("Você clicou no livro:", title, " , id= ", bookId);
+  window.location.href = `/player?id=${bookId}`
+
 
   // Aqui você pode buscar o livro pelo título ou ID no backend
 });

@@ -207,6 +207,18 @@ router.get('/buscar', async (req, res) => {
     }
 });
 
+// PLAYER
+router.get('/books/:id', async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    if (!book) return res.status(404).json({ message: "Livro não encontrado" });
+
+    res.json(book);
+  } catch (error) {
+    res.status(500).json({ message: "Erro no servidor" });
+  }
+});
+
 //  Rota para obter todos os livros
 router.get('/books', verificarAutenticacao, async (req, res) => {
     try {

@@ -15,4 +15,8 @@ router.get('/home', verificaAutenticacao, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
+router.get('/player', verificaAutenticacao ,(req, res) =>{
+    res.sendFile(path.join(__dirname, 'public', '/player.html'))
+});
+
 module.exports = router;
